@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+    body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #ff758c, #ff7eb3);
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin-top: 20px;
+        font-size: 28px;
+        color: white;
+        padding: 0 15px;
+    }
+
+    img {
+        margin-top: 40px;
+        width: 80%;
+        max-width: 350px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        transition: 0.5s;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 12px 25px;
+        margin: 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #yesBtn {
+        background-color: #ff2e63;
+        color: white;
+    }
+
+    #yesBtn:hover {
+        background-color: #ff004c;
+    }
+
+    #noBtn {
+        position: relative;
+        background-color: white;
+    }
+
+    canvas {
+        position: fixed;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+    }
+</style>
+</head>
+
+<body>
+
+<canvas id="heartsCanvas"></canvas>
+
+<img id="valImage" src="before.jpg" alt="Valentine">
+
+<h1 id="question">Will u be my Valentine? 💌</h1>
+
+<button id="yesBtn" onclick="sayYes()">yes🙏</button>
+<button id="noBtn" onclick="moveButton()">no?🤔</button>
+
+<script>
+
+function sayYes() {
+    document.getElementById("valImage").src = "after.jpg";
+    document.getElementById("question").innerHTML =
+        "OUOUOUOUUOUUUO🤪";
+    document.getElementById("noBtn").style.display = "none";
+    startHearts();
+}
+
+function moveButton() {
+    const btn = document.getElementById("noBtn");
+    btn.style.position = "absolute";
+    btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+    btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+}
+
+/* ===== FALLING HEARTS ===== */
+
+const canvas = document.getElementById("heartsCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let hearts = [];
+
+function startHearts() {
+    for (let i = 0; i < 100; i++) {
+        hearts.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 20 + 15,
+            speed: Math.random() * 2 + 1
+        });
+    }
+    requestAnimationFrame(updateHearts);
+}
+
+function drawHeart(x, y, size) {
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.bezierCurveTo(x - size/2, y - size/2, x - size, y + size/3, x, y + size);
+    ctx.bezierCurveTo(x + size, y + size/3, x + size/2, y - size/2, x, y);
+    ctx.fill();
+}
+
+function updateHearts() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    hearts.forEach(h => {
+        h.y += h.speed;
+        if (h.y > canvas.height) {
+            h.y = -10;
+            h.x = Math.random() * canvas.width;
+        }
+        drawHeart(h.x, h.y, h.size);
+    });
+
+    requestAnimationFrame(updateHearts);
+}
+
+window.addEventListener("r
