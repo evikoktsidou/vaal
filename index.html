@@ -68,7 +68,7 @@
 
 <canvas id="heartsCanvas"></canvas>
 
-<img id="valImage" src="before.jpg" alt="Valentine">
+<img id="valImage" src="Stitch-PNG-Image-HD.png" alt="Valentine">
 
 <h1 id="question">Will u be my Valentine? 💌</h1>
 
@@ -78,7 +78,7 @@
 <script>
 
 function sayYes() {
-    document.getElementById("valImage").src = "after.jpg";
+    document.getElementById("valImage").src = "yay.jpg";
     document.getElementById("question").innerHTML =
         "OUOUOUOUUOUUUO🤪";
     document.getElementById("noBtn").style.display = "none";
@@ -138,4 +138,10 @@ function updateHearts() {
     requestAnimationFrame(updateHearts);
 }
 
-window.addEventListener("r
+window.addEventListener("resize", function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>
